@@ -1,0 +1,36 @@
+su root
+passwaord:cloudera 
+
+yum install telnet telnet-server –y
+yum install telnet telnet-server –y
+
+cd /etc/flume-ng/conf 
+
+cat flume-conf.properties.template
+
+cat  flume.conf
+-------------------------------------------------------
+a1.sources = r1
+a1.sinks = k1
+a1.channels = c1
+
+a1.sources.r1.type = netcat
+a1.sources.r1.bind = localhost
+a1.sources.r1.port = 44444
+
+a1.sinks.k1.type = logger
+
+a1.channels.c1.type = memory
+a1.channels.c1.capacity = 1000
+a1.channels.c1.transactionCapacity = 100
+
+a1.sources.r1.channels = c1
+a1.sinks.k1.channel = c1
+
+--------------------------------------------------------
+
+flume-ng agent --conf conf --conf-file ./flume.conf --name a1 -Dflume.root.logger=INFO,console
+
+##another terminal
+telnet localhost 44444
+telnet localhost 44444

@@ -1,0 +1,19 @@
+
+./bin/pyspark
+
+from pyspark.sql import SQLContext
+
+sqlCon = SQLContext(sc)
+
+wikiData = sqlCon.parquetFile("parquet_input")
+wikiData = sqlCon.parquetFile(“/user/cloudera/parquet_input")
+
+wikiData.count()
+
+wikiData.registerAsTable("parquetwikitable")
+
+result = sqlCon.sql("SELECT COUNT(*) AS pageCount FROM parquetwikitable").collect()
+
+result[0].pageCount
+
+localhost:4040/jobs

@@ -1,0 +1,43 @@
+hive
+
+##local file system
+load data local inpath '/home/cloudera/Empinfo' into table emp;
+
+select * from emp;
+
+select * from emp WHERE empsal>10000;
+
+
+select emp-id,emp-sal from Emp WHERE empname="john";
+
+
+drop table emp;
+
+
+create external table student(stuid int, stuname string, stumarks int )
+row format delimited
+fields terminated by '\t';
+
+
+load data local inpath '/home/cloudera/student info' into table studentinfo;
+
+select * from student WHERE stu-marks> 60;
+
+
+drop table student ;
+
+create external table item (itemid int, itemname string, item price int)
+row format delimited
+fields terminated by '\t'
+location '/goods/things/articles';
+
+cat > item
+#10001 ponds 60
+#10002 santoor 50
+#10003 closeup 45
+#10004  pepsi  90
+
+#FROM LOCAL FILE SYSTEM:
+#Hive> load data local inpath <filepath> into table <table-name>
+load data local inpath '/home/cloudera/item'
+overwrite into table item;

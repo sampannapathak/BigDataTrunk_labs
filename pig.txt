@@ -1,0 +1,37 @@
+pig
+
+#local
+pig -x local
+
+cat wrt
+
+emp = LOAD '/home/cloudera/wrt' AS (id:int, sal:int, name:chararray);
+
+DUMP emp;
+
+DESCRIBE emp;
+
+emp1 = LOAD '/home/cloudera/wrt' AS (id, sal, name);
+
+describe emp1
+
+emp2 = LOAD '/home/cloudera/wrt' AS (id, sal, name);
+
+describe emp2;
+
+filtered_emp = FILTER emp BY sal>13000;
+
+describe filtered_emp;
+ 
+
+grouped_emp = GROUP emp BY sal;
+
+DUMP grouped_emp;
+
+DESCRIBE grouped_emp;
+
+groued_emp = GROUP emp ALL;
+
+max_sal = FOREACH grouped_emp GENERATE group, MAX(emp.sal);
+
+DUMP max_sal;

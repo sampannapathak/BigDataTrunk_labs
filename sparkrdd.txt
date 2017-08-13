@@ -1,0 +1,37 @@
+
+cd /home/cloudera/Desktop
+cat > input.txt
+
+apple
+banana counter
+counter one two three
+three one
+five seven eight
+twenty one three five counter six
+one siz helga
+apple banana fiver
+
+
+hdfs dfs -mkdir /user/cloudera/wordcount
+
+hdfs dfs -copyFromLocal /home/cloudera/Desktop/input.txt /user/cloudera/wordcount
+
+cd /usr/lib/spark
+
+./bin/spark-shell
+
+val inputFile = sc.textFile("/user/cloudera/wordcount/input.txt")
+
+val wordcount = inputFile.flatMap(line => line.split(" ")).map(word => (word, 1)).reduceByKey(_ + _)
+
+wordcount.toDebugString
+
+wordcount.cache()
+
+wordcount.saveAsTextFile("/user/cloudera/wordcount/output")
+
+localhost:4040/jobs
+
+wordcount.unpersist()
+
+hdfs dfs -cat /user/cloudera/wordcount/output/part-00000

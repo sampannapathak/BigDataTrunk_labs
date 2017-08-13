@@ -1,0 +1,23 @@
+mysql -u root -p
+Password:cloudera
+
+mysql> show databases;
+show databases;
+
+mysql> use retail_db;
+
+mysql> show tables;
+
+mysql> desc orders ;
+
+mysql>select * from departments;
+
+#Sqoop commands:
+#**********************************
+sqoop list-databases 
+
+sqoop list-tables --connect jdbc:mysql://quickstart.cloudera/retail_db --username root --password cloudera
+
+sqoop import --connect jdbc:mysql://quickstart.cloudera/retail_db --username root --password cloudera --table departments --fields-terminated-by "\t"
+
+sqoop import --connect jdbc:mysql://quickstart.cloudera/retail_db --username root --password cloudera --table departments --fields-terminated-by "\t" -m 1 --target-dir /itemsdata
